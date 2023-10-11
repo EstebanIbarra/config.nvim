@@ -6,6 +6,8 @@ This is a personal repo containing my setup for nvim, feel free to use it if you
 
 - Neovim >= 0.9.X
 - [Packer](https://github.com/wbthomason/packer.nvim)
+- [RipGrep](https://github.com/BurntSushi/ripgrep)
+- [fd](https://github.com/sharkdp/fd)
 
 ## Instructions
 
