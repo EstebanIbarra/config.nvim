@@ -21,6 +21,7 @@ end
 
 -- This remap is useful if you want to use the Telescope UI
 -- vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end, { desc = "Open harpoon window" })
+-- TODO: Find config to remove elements from the Telescope UI list
 
 vim.keymap.set('n', '<leader>a', function() harpoon:list():append() end)
 
