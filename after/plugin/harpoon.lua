@@ -19,11 +19,13 @@ local function toggle_telescope(harpoon_files)
   }):find()
 end
 
+-- This remap is useful if you want to use the Telescope UI
+-- vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end, { desc = "Open harpoon window" })
+
 vim.keymap.set('n', '<leader>a', function() harpoon:list():append() end)
 
--- To use default harpoon UI toggle the comments for the following remap
--- vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
-vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end, { desc = "Open harpoon window" })
+-- This remap is useful if you want to use the default harpoon UI
+vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
 -- This remaps apply only to MacOS
 vim.keymap.set('n', '˙', function() harpoon:list():select(1) end)
