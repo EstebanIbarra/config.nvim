@@ -1,3 +1,3 @@
 require('eir.remap')
-require('eir.packer')
+require('eir.lazy')
 require('eir.set')
