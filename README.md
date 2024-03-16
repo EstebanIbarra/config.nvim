@@ -10,9 +10,9 @@ This is a personal repo containing my setup for nvim, feel free to use it if you
 
 ## Instructions
 
-1. Clone this repository in your ```$XDG_CONFIG_HOME/nvim``` directory.
+1. Clone this repository in your ```$XDG_CONFIG_HOME/nvim``` directory.[^1]
 2. Start nvim.
 3. If you use Github Copilot, run the command ```Copilot setup```
 4. Enjoy.
 
-Note: ```$XDG_CONFIG_HOME```defaults to ```$HOME/.config``` in Linux/Unix OS
+[^1]: ```$XDG_CONFIG_HOME``` defaults to ```$HOME/.config``` in Linux/Unix OS
