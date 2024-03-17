@@ -7,6 +7,7 @@ This is a personal repo containing my setup for nvim, feel free to use it if you
 - [Neovim](https://neovim.io) >= 0.9.X
 - [RipGrep](https://github.com/BurntSushi/ripgrep)
 - [fd](https://github.com/sharkdp/fd)
+- [Pandoc](https://pandoc.org)
 
 ## Instructions
 
