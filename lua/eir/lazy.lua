@@ -49,5 +49,6 @@ require("lazy").setup({
     },
     "github/copilot.vim",
     "eandrju/cellular-automaton.nvim",
+    "davidgranstrom/scnvim",
 })
 
