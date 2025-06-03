@@ -1,55 +1,5 @@
----@diagnostic disable: undefined-global, undefined-field
+---@diagnostic disable: undefined-field
 local lsp = require('lsp-zero')
-
-lsp.preset('recommended')
-
-require('mason').setup({})
-require('mason-lspconfig').setup({
-  ensure_installed = {
-    'tsserver',
-    'eslint',
-    'rust_analyzer'
-  },
-  handlers = {
-    lsp.default_setup,
-  },
-})
-
-require("lspconfig").lua_ls.setup {
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = { 'vim' }
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
-        checkThirdParty = false,
-      },
-      telemetry = {
-        enable = false,
-      },
-    },
-  },
-}
-
-local cmp = require('cmp')
-local cmp_select = { behavior = cmp.SelectBehavior.Select }
-cmp.setup({
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
-  },
-  mapping = cmp.mapping.preset.insert({
-    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-    ['<C-Space>'] = cmp.mapping.complete(),
-  })
-})
-
-lsp.set_preferences({
-  sign_icons = { }
-})
 
 ---@diagnostic disable-next-line: unused-local
 lsp.on_attach(function(client, bufnr)
@@ -66,5 +16,40 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set('n', '<leader>vrn', function() vim.lsp.buf.rename() end, opts)
   vim.keymap.set('i', '<C-h>', function() vim.lsp.buf.signature_help() end, opts)
 end)
+
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  ensure_installed = {
+    'bashls',
+    'vimls',
+    'lua_ls',
+    'yamlls',
+    'jsonls',
+    'rust_analyzer',
+    'dotls'
+  },
+  handlers = {
+    lsp.default_setup,
+    lua_ls = function()
+      local opts = require('lsp-zero').nvim_lua_ls()
+      require('lspconfig').lua_ls.setup(opts)
+    end,
+  },
+})
+
+local cmp = require('cmp')
+local cmp_select = { behavior = cmp.SelectBehavior.Select }
+cmp.setup({
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-Space>'] = cmp.mapping.complete(),
+  })
+})
 
 lsp.setup()

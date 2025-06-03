@@ -2,6 +2,7 @@
 local harpoon = require("harpoon")
 harpoon:setup({})
 
+--[[
 -- basic telescope configuration
 local conf = require("telescope.config").values
 local function toggle_telescope(harpoon_files)
@@ -20,23 +21,25 @@ local function toggle_telescope(harpoon_files)
 end
 
 -- This remap is useful if you want to use the Telescope UI
--- vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end, { desc = "Open harpoon window" })
+vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end, { desc = "Open harpoon window" })
 -- TODO: Find config to remove elements from the Telescope UI list
+--]]
 
 vim.keymap.set('n', '<leader>a', function() harpoon:list():append() end)
 
 -- This remap is useful if you want to use the default harpoon UI
 vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
--- This remaps apply only to MacOS
-vim.keymap.set('n', '˙', function() harpoon:list():select(1) end)
-vim.keymap.set('n', '∆', function() harpoon:list():select(2) end)
-vim.keymap.set('n', '˚', function() harpoon:list():select(3) end)
-vim.keymap.set('n', '¬', function() harpoon:list():select(4) end)
--- This remaps apply to every other OS
---[[
-vim.keymap.set('n', '<M-h>', function() harpoon:list():select(1) end)
-vim.keymap.set('n', '<M-j>', function() harpoon:list():select(2) end)
-vim.keymap.set('n', '<M-k>', function() harpoon:list():select(3) end)
-vim.keymap.set('n', '<M-l>', function() harpoon:list():select(4) end)
---]]
+-- This remap conditionally if a system is MacOS because weird
+---@diagnostic disable-next-line: undefined-field
+if vim.loop.os_uname().sysname == "Darwin" then
+  vim.keymap.set('n', '˙', function() harpoon:list():select(1) end)
+  vim.keymap.set('n', '∆', function() harpoon:list():select(2) end)
+  vim.keymap.set('n', '˚', function() harpoon:list():select(3) end)
+  vim.keymap.set('n', '¬', function() harpoon:list():select(4) end)
+else
+  vim.keymap.set('n', '<M-h>', function() harpoon:list():select(1) end)
+  vim.keymap.set('n', '<M-j>', function() harpoon:list():select(2) end)
+  vim.keymap.set('n', '<M-k>', function() harpoon:list():select(3) end)
+  vim.keymap.set('n', '<M-l>', function() harpoon:list():select(4) end)
+end
