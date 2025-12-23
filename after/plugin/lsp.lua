@@ -1,55 +1,19 @@
----@diagnostic disable: undefined-field
-local lsp = require('lsp-zero')
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(event)
+    local bufmap = function(mode, nemo, command)
+      vim.keymap.set(mode, nemo, command, { buffer = event.buf, remap = false })
+    end
 
----@diagnostic disable-next-line: unused-local
-lsp.on_attach(function(client, bufnr)
-  local opts = { buffer = bufnr, remap = false }
-
-  vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
-  vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
-  vim.keymap.set('n', '<leader>vws', function() vim.lsp.buf.workspace_symbol() end, opts)
-  vim.keymap.set('n', '<leader>vd', function() vim.diagnostic.open_float() end, opts)
-  vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1 }) end, opts)
-  vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1 }) end, opts)
-  vim.keymap.set('n', '<leader>vca', function() vim.lsp.buf.code_action() end, opts)
-  vim.keymap.set('n', '<leader>vrr', function() vim.lsp.buf.references() end, opts)
-  vim.keymap.set('n', '<leader>vrn', function() vim.lsp.buf.rename() end, opts)
-  vim.keymap.set('i', '<C-h>', function() vim.lsp.buf.signature_help() end, opts)
-end)
-
-require('mason').setup({})
-require('mason-lspconfig').setup({
-  ensure_installed = {
-    'bashls',
-    'vimls',
-    'lua_ls',
-    'yamlls',
-    'jsonls',
-    'rust_analyzer',
-    'dotls'
-  },
-  handlers = {
-    lsp.default_setup,
-    lua_ls = function()
-      local opts = require('lsp-zero').nvim_lua_ls()
-      require('lspconfig').lua_ls.setup(opts)
-    end,
-  },
+    bufmap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>')
+    bufmap('n', 'gtd', '<cmd>lua vim.lsp.buf.type_definition()<cr>')
+    bufmap('n', 'K', '<cmd>lua vim.lsp.buf.hover({border = "double", max_width = 80, title = "Documentation", title_pos = "center"})<cr>')
+    bufmap('n', '<leader>vws', '<cmd>lua vim.lsp.buf.workspace_symbol()<cr>')
+    bufmap('n', '<leader>vd', '<cmd>lua vim.diagnostic.open_float()<cr>')
+    bufmap('n', ']d', '<cmd>lua vim.diagnostic.jump({ count = 1 })<cr>')
+    bufmap('n', '[d', '<cmd>lua vim.diagnostic.jump({ count = -1 })<cr>')
+    bufmap('n', '<leader>vca', '<cmd>lua vim.lsp.buf.code_action()<cr>')
+    bufmap('n', '<leader>vrr', '<cmd>lua vim.lsp.buf.references()<cr>')
+    bufmap('n', '<leader>vrn', '<cmd>lua vim.lsp.buf.rename()<cr>')
+    bufmap('i', '<C-h>', '<cmd>lua vim.lsp.buf.signature_help()<cr>')
+  end,
 })
-
-local cmp = require('cmp')
-local cmp_select = { behavior = cmp.SelectBehavior.Select }
-cmp.setup({
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
-  },
-  mapping = cmp.mapping.preset.insert({
-    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-    ['<C-Space>'] = cmp.mapping.complete(),
-  })
-})
-
-lsp.setup()

@@ -21,7 +21,6 @@ require("lazy").setup({
       ts_update()
     end,
   },
-  --"nvim-treesitter/playground",
   "nvim-treesitter/nvim-treesitter-context",
   {
     "ThePrimeagen/harpoon",
@@ -31,24 +30,30 @@ require("lazy").setup({
   "mbbill/undotree",
   "tpope/vim-fugitive",
   {
-    "VonHeikemen/lsp-zero.nvim",
+    "mason-org/mason-lspconfig.nvim",
+    opts = {
+      ensure_installed = {
+        'bashls',
+        'dotls',
+        'jsonls',
+        'lua_ls',
+        'rust_analyzer',
+        'vimls',
+        'yamlls',
+      }
+    },
     dependencies = {
-      -- LSP Support
+      { "mason-org/mason.nvim", opts = { ui = { border = 'double' } } },
       "neovim/nvim-lspconfig",
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-      -- Autocompletion
-      "hrsh7th/nvim-cmp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "saadparwaiz1/cmp_luasnip",
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-nvim-lua",
-      -- Snippets
-      "L3MON4D3/LuaSnip",
-      "rafamadriz/friendly-snippets",
-    }
+    },
   },
+  -- Autocompletion
+  "hrsh7th/nvim-cmp",
+  "hrsh7th/cmp-buffer",
+  "hrsh7th/cmp-path",
+  "saadparwaiz1/cmp_luasnip",
+  "hrsh7th/cmp-nvim-lsp",
+  "hrsh7th/cmp-nvim-lua",
   "github/copilot.vim",
   "eandrju/cellular-automaton.nvim",
   "davidgranstrom/scnvim",
